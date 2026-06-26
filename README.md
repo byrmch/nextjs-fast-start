@@ -2,7 +2,7 @@
 
 # nextjs-fast-start
 
-**轻量级 Next.js 16 启动模板——认证、数据库、AI、shadcn/ui，开箱即用**
+**Lightweight Next.js 16 starter — auth, database, AI, shadcn/ui, zero config**
 
 <p>
   <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js" alt="Next.js 16">
@@ -13,9 +13,11 @@
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
 </p>
 
+[中文文档](README_CN.md)
+
 </div>
 
-## 快速开始
+## Quick Start
 
 ```bash
 pnpm create next-app@latest my-project --example https://github.com/byrmch/nextjs-fast-start
@@ -26,80 +28,80 @@ npx prisma migrate dev --name init
 pnpm dev
 ```
 
-打开 [http://localhost:3000](http://localhost:3000)，首页自动检测各模块状态。
+Open [http://localhost:3000](http://localhost:3000) — the homepage runs a self-check for all modules.
 
-## 特性
+## Features
 
 | | |
 |---|---|
-| **认证** | Better Auth v1.6，邮箱密码注册 / 登录 |
-| **数据库** | Prisma v7 + SQLite，零配置 |
+| **Auth** | Better Auth v1.6, email/password sign-up & sign-in |
+| **Database** | Prisma v7 + SQLite, zero config |
 | **AI** | Vercel AI SDK v7 + DeepSeek |
-| **UI** | Tailwind CSS v4 + shadcn/ui，深色模式跟随系统 |
-| **统一响应** | `{ code, data, msg }` + `success()` / `fail()` |
-| **异常处理** | `AppError` + `withErrorHandler`，零 try/catch |
-| **请求代理** | 鉴权守卫 + 日志 + 响应时间 |
-| **环境校验** | Zod schema，启动时校验 |
-| **安全头** | CSP / X-Frame-Options / Referrer-Policy |
+| **UI** | Tailwind CSS v4 + shadcn/ui, dark mode follows system |
+| **Unified Response** | `{ code, data, msg }` + `success()` / `fail()` |
+| **Error Handling** | `AppError` + `withErrorHandler`, zero try/catch |
+| **Proxy** | Auth guard + request logging + response time header |
+| **Env Validation** | Zod schema, validated at startup |
+| **Security Headers** | CSP / X-Frame-Options / Referrer-Policy |
 
-## 技术栈
+## Tech Stack
 
-| 类别 | 技术 |
+| Category | Technology |
 |---|---|
-| 框架 | Next.js 16 (App Router) |
-| 语言 | TypeScript 5 |
-| 样式 | Tailwind CSS 4 |
-| 组件 | shadcn/ui |
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4 |
+| Components | shadcn/ui |
 | ORM | Prisma 7 + SQLite |
-| 认证 | Better Auth 1.6 |
+| Auth | Better Auth 1.6 |
 | AI | Vercel AI SDK 7 + DeepSeek |
 
-## 环境变量
+## Environment Variables
 
 ```bash
 cp .env.example .env
 ```
 
-| 变量 | 说明 | 默认值 |
+| Variable | Description | Default |
 |---|---|---|
-| `DATABASE_URL` | SQLite 文件路径 | `file:./dev.db` |
-| `BETTER_AUTH_SECRET` | 认证密钥（≥32 字符） | - |
-| `BETTER_AUTH_URL` | 应用地址 | `http://localhost:3000` |
-| `AI_MODEL` | AI 模型名 | `deepseek-v4-flash` |
-| `DEEPSEEK_API_KEY` | DeepSeek API Key | - |
+| `DATABASE_URL` | SQLite file path | `file:./dev.db` |
+| `BETTER_AUTH_SECRET` | Auth secret (≥32 chars) | - |
+| `BETTER_AUTH_URL` | App URL | `http://localhost:3000` |
+| `AI_MODEL` | AI model name | `deepseek-v4-flash` |
+| `DEEPSEEK_API_KEY` | DeepSeek API key | - |
 
-## 命令
+## Commands
 
-| 命令 | 说明 |
+| Command | Description |
 |---|---|
-| `pnpm dev` | 启动开发服务器 |
-| `pnpm build` | 生产构建 |
-| `pnpm lint` | ESLint 检查 |
-| `npx prisma migrate dev` | 数据库迁移 |
-| `npx prisma db seed` | 创建测试用户 |
+| `pnpm dev` | Start dev server |
+| `pnpm build` | Production build |
+| `pnpm lint` | ESLint check |
+| `npx prisma migrate dev` | Database migration |
+| `npx prisma db seed` | Seed test user |
 
-## 项目结构
+## Project Structure
 
 ```
 src/
-├── core/               # 可拆卸功能模块
-│   ├── ai/             #   AI 接口封装
-│   ├── auth/           #   Better Auth 配置
-│   ├── db/             #   Prisma 客户端
-│   └── response/       #   统一响应 + 错误码
-├── config/env.ts       # 环境变量校验
-├── proxy.ts            # 鉴权 + 请求日志
-├── lib/utils.ts        # cn() 工具函数
+├── core/               # Pluggable feature modules
+│   ├── ai/             #   AI API wrapper
+│   ├── auth/           #   Better Auth config
+│   ├── db/             #   Prisma client
+│   └── response/       #   Unified response + error codes
+├── config/env.ts       # Env validation
+├── proxy.ts            # Auth guard + request logging
+├── lib/utils.ts        # cn() utility
 ├── components/
-│   ├── ui/             # shadcn/ui 组件
-│   └── layout/         # 导航栏
+│   ├── ui/             # shadcn/ui components
+│   └── layout/         # Navbar
 ├── app/
-│   ├── page.tsx        # 自检首页
-│   ├── layout.tsx      # 根布局
-│   ├── error.tsx       # 错误边界
-│   └── api/            # API 路由
+│   ├── page.tsx        # Self-check homepage
+│   ├── layout.tsx      # Root layout
+│   ├── error.tsx       # Error boundary
+│   └── api/            # API routes
 prisma/
-├── schema.prisma       # 数据模型
+├── schema.prisma       # Data models
 ├── migrations/
 └── seed.ts
 ```
