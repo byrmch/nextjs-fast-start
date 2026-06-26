@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js" alt="Next.js 16">
   <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript" alt="TypeScript">
   <img src="https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma" alt="Prisma 7">
+  <img src="https://img.shields.io/badge/SQLite-003B57?logo=sqlite" alt="SQLite">
   <img src="https://img.shields.io/badge/AI_SDK-7-000?logo=vercel" alt="AI SDK v7">
   <img src="https://img.shields.io/badge/shadcn/ui-2d3748?logo=shadcnui" alt="shadcn/ui">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
@@ -19,14 +20,41 @@
 
 ## 快速开始
 
-```bash
-pnpm create next-app@latest my-project --example https://github.com/byrmch/nextjs-fast-start
-cd my-project
-cp .env.example .env
-npx prisma generate
-npx prisma migrate dev --name init
-pnpm dev
-```
+1. **从模板创建项目**
+   ```bash
+   pnpm create next-app@latest my-project --example https://github.com/byrmch/nextjs-fast-start
+   cd my-project
+   ```
+
+2. **配置环境变量**
+   ```bash
+   cp .env.example .env
+   node -e "const{randomBytes}=require('crypto'),{readFileSync,writeFileSync}=require('fs'),e=readFileSync('.env','utf8');writeFileSync('.env',e.replace('your-secret-at-least-32-chars',randomBytes(32).toString('base64')))"
+   ```
+   复制 `.env.example` → `.env`，然后自动生成安全的 `BETTER_AUTH_SECRET` 写入。
+
+3. **生成 Prisma 客户端**
+   ```bash
+   npx prisma generate
+   ```
+   根据 `prisma/schema.prisma` 生成类型安全的数据库客户端。
+
+4. **初始化数据库**
+   ```bash
+   npx prisma db push
+   ```
+   将 Prisma schema 推送到 SQLite——创建所有表。
+
+5. **创建测试用户**
+   ```bash
+   npx prisma db seed
+   ```
+   创建测试账号 `test@example.com` / `12345678`。
+
+6. **启动开发服务器**
+   ```bash
+   pnpm dev
+   ```
 
 打开 [http://localhost:3000](http://localhost:3000)，首页自动检测各模块状态。
 
@@ -77,7 +105,7 @@ cp .env.example .env
 | `pnpm dev` | 启动开发服务器 |
 | `pnpm build` | 生产构建 |
 | `pnpm lint` | ESLint 检查 |
-| `npx prisma migrate dev` | 数据库迁移 |
+| `npx prisma db push` | 数据库初始化 |
 | `npx prisma db seed` | 创建测试用户 |
 
 ## 项目结构

@@ -8,6 +8,7 @@
   <img src="https://img.shields.io/badge/Next.js-16-black?logo=next.js" alt="Next.js 16">
   <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript" alt="TypeScript">
   <img src="https://img.shields.io/badge/Prisma-7-2D3748?logo=prisma" alt="Prisma 7">
+  <img src="https://img.shields.io/badge/SQLite-003B57?logo=sqlite" alt="SQLite">
   <img src="https://img.shields.io/badge/AI_SDK-7-000?logo=vercel" alt="AI SDK v7">
   <img src="https://img.shields.io/badge/shadcn/ui-2d3748?logo=shadcnui" alt="shadcn/ui">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
@@ -19,14 +20,41 @@
 
 ## Quick Start
 
-```bash
-pnpm create next-app@latest my-project --example https://github.com/byrmch/nextjs-fast-start
-cd my-project
-cp .env.example .env
-npx prisma generate
-npx prisma migrate dev --name init
-pnpm dev
-```
+1. **Create project from template**
+   ```bash
+   pnpm create next-app@latest my-project --example https://github.com/byrmch/nextjs-fast-start
+   cd my-project
+   ```
+
+2. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   node -e "const{randomBytes}=require('crypto'),{readFileSync,writeFileSync}=require('fs'),e=readFileSync('.env','utf8');writeFileSync('.env',e.replace('your-secret-at-least-32-chars',randomBytes(32).toString('base64')))"
+   ```
+   Copies `.env.example` → `.env`, then auto-generates a secure `BETTER_AUTH_SECRET` and writes it in.
+
+3. **Generate Prisma client**
+   ```bash
+   npx prisma generate
+   ```
+   Generates the typed database client from `prisma/schema.prisma`.
+
+4. **Initialize database**
+   ```bash
+   npx prisma db push
+   ```
+   Pushes the Prisma schema to SQLite — creates all tables.
+
+5. **Seed test user**
+   ```bash
+   npx prisma db seed
+   ```
+   Creates a test account: `test@example.com` / `12345678`.
+
+6. **Start dev server**
+   ```bash
+   pnpm dev
+   ```
 
 Open [http://localhost:3000](http://localhost:3000) — the homepage runs a self-check for all modules.
 
@@ -77,7 +105,7 @@ cp .env.example .env
 | `pnpm dev` | Start dev server |
 | `pnpm build` | Production build |
 | `pnpm lint` | ESLint check |
-| `npx prisma migrate dev` | Database migration |
+| `npx prisma db push` | Database initialization |
 | `npx prisma db seed` | Seed test user |
 
 ## Project Structure
